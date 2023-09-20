@@ -88,9 +88,7 @@ class SignUpScreenState extends State<SignUpScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   ElevatedButton(
-                    onPressed: () {
-                      // Handle sign-up logic here
-                    },
+                    onPressed: () {},
                     child: const Text('Sign Up'),
                   ),
                   const SizedBox(width: 20),
@@ -98,7 +96,6 @@ class SignUpScreenState extends State<SignUpScreen> {
                   const SizedBox(width: 20),
                   ElevatedButton(
                     onPressed: () {
-                      // Navigate back to the login screen
                       Navigator.of(context).pop();
                     },
                     child: const Text('Cancel'),
