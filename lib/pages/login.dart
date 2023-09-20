@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:n1mobile/pages/sign_up.dart';
+import 'package:n1mobile/pages/user_password.dart';
 
 class Login extends StatelessWidget {
   const Login({super.key});
@@ -47,7 +48,12 @@ class Login extends StatelessWidget {
             // Submit button
             ElevatedButton(
               onPressed: () {
-                // Handle login logic here
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        const UserPassword(), // Replace SignUpScreen with your sign-up screen
+                  ),
+                );
               },
               child: const Text('Submit'),
             ),
