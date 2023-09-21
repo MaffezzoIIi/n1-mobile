@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:n1mobile/pages/sign_up.dart';
+import 'package:n1mobile/pages/main_page.dart';
 
 class UserPassword extends StatefulWidget {
   const UserPassword({super.key});
@@ -312,7 +312,7 @@ class UserPasswordState extends State<UserPassword> {
                               onTap: () {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
-                                    builder: (context) => const SignUpScreen(),
+                                    builder: (context) => const MainPage(),
                                   ),
                                 );
                               },
