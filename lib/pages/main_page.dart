@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:n1mobile/pages/transfer.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -31,14 +32,13 @@ class MainPage extends StatelessWidget {
       body: Column(
         children: [
           Container(
-            decoration: const BoxDecoration(color: Colors.blue),
             margin: const EdgeInsets.only(top: 15),
             alignment: Alignment.center,
             child: Container(
               width: 325,
               height: 150,
               decoration: BoxDecoration(
-                color: Colors.grey,
+                border: Border.all(color: Colors.grey, width: 1),
                 borderRadius: BorderRadius.circular(15),
               ),
               padding: const EdgeInsets.all(15),
@@ -71,7 +71,6 @@ class MainPage extends StatelessWidget {
             ),
           ),
           Container(
-            decoration: const BoxDecoration(color: Colors.blue),
             margin: const EdgeInsets.only(top: 15),
             alignment: Alignment.center,
             child: Container(
@@ -79,8 +78,8 @@ class MainPage extends StatelessWidget {
               width: 375,
               height: 505,
               decoration: BoxDecoration(
-                color: Colors.grey,
                 borderRadius: BorderRadius.circular(35),
+                border: Border.all(color: Colors.grey, width: 1),
               ),
               padding: const EdgeInsets.fromLTRB(35, 45, 35, 0),
               child: Column(
@@ -91,17 +90,26 @@ class MainPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Column(children: [
-                          Container(
-                            width: 85,
-                            height: 85,
-                            decoration: BoxDecoration(
-                              color: Colors.orange,
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            child: const Icon(
-                              Icons.swap_horiz_rounded,
-                              color: Colors.white,
-                              size: 75,
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => const Transfer(),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              width: 85,
+                              height: 85,
+                              decoration: BoxDecoration(
+                                color: Colors.orange,
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: const Icon(
+                                Icons.swap_horiz_rounded,
+                                color: Colors.white,
+                                size: 75,
+                              ),
                             ),
                           ),
                           const SizedBox(height: 10),
@@ -111,17 +119,22 @@ class MainPage extends StatelessWidget {
                           ),
                         ]),
                         Column(children: [
-                          Container(
-                            width: 85,
-                            height: 85,
-                            decoration: BoxDecoration(
-                              color: Colors.orange,
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            child: const Icon(
-                              Icons.payment,
-                              color: Colors.white,
-                              size: 75,
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                              width: 85,
+                              height: 85,
+                              decoration: BoxDecoration(
+                                color: Colors.orange,
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: const Icon(
+                                Icons.payment,
+                                color: Colors.white,
+                                size: 75,
+                              ),
                             ),
                           ),
                           const SizedBox(height: 10),
