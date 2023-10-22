@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "737550078923",
+    "project_id": "b8b-bank-7a9c2",
+    "storage_bucket": "b8b-bank-7a9c2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:737550078923:android:af5776efa683208195dc4e",
+        "android_client_info": {
+          "package_name": "com.example.n1mobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACNecfW9tz6nWLeQET-TkTOvgnsXs_pDE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

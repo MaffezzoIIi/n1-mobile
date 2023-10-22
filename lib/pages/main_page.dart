@@ -41,7 +41,7 @@ class MainPage extends StatelessWidget {
                 border: Border.all(color: Colors.grey, width: 1),
                 borderRadius: BorderRadius.circular(15),
               ),
-              padding: const EdgeInsets.all(15),
+              padding: const EdgeInsets.all(13),
               child: Row(children: [
                 const Icon(color: Colors.orange, Icons.person, size: 120),
                 Container(
@@ -94,7 +94,7 @@ class MainPage extends StatelessWidget {
                             onTap: () {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
-                                  builder: (context) => const Transfer(),
+                                  builder: (context) => Transfer(),
                                 ),
                               );
                             },
