@@ -1,16 +1,17 @@
 # n1mobile
 
-A new Flutter project.
+# Funcionalidades
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Login funcional
+- Validação de senha do perfil
+- Cadastro de conta
+- Funcionalidades dos botões da home
+- Funcionalidades de configuração de conta
+- Pagamento de cartão
+- Transferencia de dinheiro
+- Troca do tipo de moeda
+- Redirecionamento para um aplicativo de e-commerce
+- Função de NFC para pagar o cartão
+- Leitor de QR code
+- Form de pagamento
+- Gráfico de gasto
