@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:n1mobile/pages/list_transfers.dart';
 import 'package:n1mobile/pages/transfer.dart';
 
 class MainPage extends StatelessWidget {
@@ -121,7 +122,11 @@ class MainPage extends StatelessWidget {
                         Column(children: [
                           GestureDetector(
                             onTap: () {
-                              Navigator.pop(context);
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => ListTransfers(),
+                                ),
+                              );
                             },
                             child: Container(
                               width: 85,

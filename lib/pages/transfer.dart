@@ -79,6 +79,8 @@ class Transfer extends StatelessWidget {
                   );
 
                   createUser(transferModel);
+
+                  Navigator.of(context).pop();
                 },
                 child: const Text('Transferir'),
               ),
@@ -113,14 +115,6 @@ class TransferModel {
     required this.dateTransfer,
   });
 
-  factory TransferModel.fromMap(Map<String, dynamic> map) {
-    return TransferModel(
-      name: map['name'] as String,
-      value: map['value'] as int,
-      dateTransfer: map['dateTransfer'] as DateTime,
-    );
-  }
-
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -129,4 +123,11 @@ class TransferModel {
       'dateTransfer': dateTransfer,
     };
   }
+
+  static TransferModel fromJson(Map<String, dynamic> json) => TransferModel(
+        id: json['id'],
+        name: json['name'],
+        value: json['value'],
+        dateTransfer: json['dateTransfer'].toDate(),
+      );
 }
