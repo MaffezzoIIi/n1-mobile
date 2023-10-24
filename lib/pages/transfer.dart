@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:n1mobile/pages/Transfer/alter_transfer.dart';
 import 'package:n1mobile/pages/Transfer/create_transfer.dart';
 import 'package:n1mobile/pages/Transfer/list_transfers.dart';
 
@@ -89,7 +90,7 @@ class Transfer extends StatelessWidget {
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => const ListTransfers(),
+                      builder: (context) => const AlterTransfers(),
                     ),
                   );
                 },
@@ -105,7 +106,7 @@ class Transfer extends StatelessWidget {
                   child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('Alterar data de trasnferência',
+                      Text('Alterar trasnferência',
                           style: TextStyle(fontSize: 16, color: Colors.white)),
                     ],
                   ),
