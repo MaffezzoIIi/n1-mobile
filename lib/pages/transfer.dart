@@ -1,7 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:n1mobile/pages/Transfer/create_transfer.dart';
+import 'package:n1mobile/pages/Transfer/list_transfers.dart';
 
 class Transfer extends StatelessWidget {
   Transfer({Key? key}) : super(key: key);
@@ -29,60 +28,88 @@ class Transfer extends StatelessWidget {
           ],
         ),
         body: Container(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Column(
             children: [
-              TextField(
-                controller: contaDestino,
-                decoration: const InputDecoration(
-                  labelText: 'Conta de destino',
-                  hintText: 'Número da conta',
-                ),
-              ),
-              TextField(
-                controller: valorTransfer,
-                decoration: const InputDecoration(
-                  labelText: 'Valor',
-                  hintText: '0.00',
-                ),
-                keyboardType: TextInputType.number,
-              ),
-              // create a date picker widget
-              DateTimeField(
-                controller: dataController,
-                decoration: const InputDecoration(
-                  labelText: 'Data da transferência',
-                  hintText: 'dd/mm/aaaa',
-                ),
-                onShowPicker: (context, currentValue) async {
-                  final date = await showDatePicker(
-                    context: context,
-                    firstDate: DateTime(1900),
-                    lastDate: DateTime(2100),
-                    initialDate: currentValue ?? DateTime.now(),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const CreateTransfer(),
+                    ),
                   );
-                  return date;
                 },
-                format: DateFormat('yyyy-MM-dd'),
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.blue,
+                        width: 1,
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.blue),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('Transferir',
+                          style: TextStyle(fontSize: 16, color: Colors.white)),
+                    ],
+                  ),
+                ),
               ),
-
-              ElevatedButton(
-                onPressed: () {
-                  final name = contaDestino.text;
-                  final value = int.tryParse(valorTransfer.text) ?? 0;
-                  final dateTransfer = dataController.text;
-
-                  final TransferModel transferModel = TransferModel(
-                    name: name,
-                    value: value,
-                    dateTransfer: DateTime.parse(dateTransfer),
+              const SizedBox(height: 20),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const ListTransfers(),
+                    ),
                   );
-
-                  createUser(transferModel);
-
-                  Navigator.of(context).pop();
                 },
-                child: const Text('Transferir'),
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.blue,
+                        width: 1,
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.blue),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('Ver Transferências',
+                          style: TextStyle(fontSize: 16, color: Colors.white)),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const ListTransfers(),
+                    ),
+                  );
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.blue,
+                        width: 1,
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.blue),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('Alterar data de trasnferência',
+                          style: TextStyle(fontSize: 16, color: Colors.white)),
+                    ],
+                  ),
+                ),
               ),
             ],
           ),
@@ -90,44 +117,4 @@ class Transfer extends StatelessWidget {
   }
 
   void setState(Null Function() param0) {}
-
-  Future createUser(TransferModel transferModel) async {
-    final docTransfer =
-        FirebaseFirestore.instance.collection('transfers').doc();
-    transferModel.id = docTransfer.id;
-
-    final json = transferModel.toJson();
-
-    await docTransfer.set(json);
-  }
-}
-
-class TransferModel {
-  String id;
-  final String name;
-  final int value;
-  final DateTime dateTransfer;
-
-  TransferModel({
-    this.id = '',
-    required this.name,
-    required this.value,
-    required this.dateTransfer,
-  });
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'value': value,
-      'dateTransfer': dateTransfer,
-    };
-  }
-
-  static TransferModel fromJson(Map<String, dynamic> json) => TransferModel(
-        id: json['id'],
-        name: json['name'],
-        value: json['value'],
-        dateTransfer: json['dateTransfer'].toDate(),
-      );
 }

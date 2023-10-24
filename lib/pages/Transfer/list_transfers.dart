@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:n1mobile/pages/transfer.dart';
+import 'package:n1mobile/models/transfer_model.dart';
+import 'package:n1mobile/pages/Transfer/create_transfer.dart';
 
 class ListTransfers extends StatefulWidget {
   const ListTransfers({super.key});
@@ -46,7 +47,13 @@ class ListTransfersState extends State<ListTransfers> {
             }
           }),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => const CreateTransfer(),
+            ),
+          );
+        },
         child: const Icon(Icons.add),
       ),
     );

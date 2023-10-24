@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:n1mobile/pages/list_transfers.dart';
+import 'package:n1mobile/pages/Transfer/list_transfers.dart';
 import 'package:n1mobile/pages/transfer.dart';
 
 class MainPage extends StatelessWidget {
