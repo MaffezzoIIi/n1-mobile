@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:n1mobile/pages/main_page.dart';
 
@@ -10,6 +11,9 @@ class UserPassword extends StatefulWidget {
 
 class UserPasswordState extends State<UserPassword> {
   final TextEditingController _passwordController = TextEditingController();
+  List<String> enteredNumbers = [];
+
+  FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override
   void dispose() {
@@ -17,8 +21,109 @@ class UserPasswordState extends State<UserPassword> {
     super.dispose();
   }
 
+  void addNumber(String number) {
+    if (enteredNumbers.length < 6) {
+      setState(() {
+        enteredNumbers.add(number);
+      });
+    }
+  }
+
+  void removeNumber() {
+    if (enteredNumbers.isNotEmpty) {
+      setState(() {
+        enteredNumbers.removeLast();
+      });
+    }
+  }
+
+  Future<void> checkPassword() async {
+    String password = enteredNumbers.join();
+    if (password.length == 6) {
+      try {
+        DocumentSnapshot<Map<String, dynamic>> snapshot = await _firestore
+            .collection('users')
+            .doc('4F5khvA9vsL2Aj2AGpTX')
+            .get();
+
+        if (snapshot.exists) {
+          String storedPassword = snapshot.get('password');
+          if (password == storedPassword) {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => const MainPage(),
+              ),
+            );
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Senha incorreta. Por favor, tente novamente.'),
+                duration: Duration(seconds: 2),
+              ),
+            );
+          }
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content:
+                  Text('Usuário não encontrado. Por favor, tente novamente.'),
+              duration: Duration(seconds: 2),
+            ),
+          );
+        }
+      } catch (e) {
+        print(e);
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    Row buildDigitsRow(List<String> numbers) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: numbers.map((number) {
+          return Container(
+            width: 37,
+            height: 37,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(50),
+              color: Colors.orange,
+            ),
+            child: Center(
+              child: Text(
+                number,
+                style: const TextStyle(fontSize: 20),
+              ),
+            ),
+          );
+        }).toList(),
+      );
+    }
+
+    GestureDetector buildNumberButton(String number) {
+      return GestureDetector(
+        onTap: () {
+          addNumber(number);
+        },
+        child: Container(
+          width: 50,
+          height: 50,
+          margin: const EdgeInsets.only(left: 13),
+          child: Center(
+            child: Text(
+              number,
+              style: const TextStyle(fontSize: 20),
+            ),
+          ),
+        ),
+      );
+    }
+
+    if (enteredNumbers.length == 6) {
+      checkPassword();
+    }
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -76,79 +181,27 @@ class UserPasswordState extends State<UserPassword> {
                     // add six circles to represent the password
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
+                      children: [buildDigitsRow(enteredNumbers)],
+                    ),
+                    const SizedBox(
+                      height: 17,
+                    ),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          buildNumberButton('1'),
+                          buildNumberButton('2'),
+                          buildNumberButton('3'),
+                        ]),
+                    const SizedBox(
+                      height: 17,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Container(
-                          width: 37,
-                          height: 37,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(50),
-                              color: Colors.orange),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Container(
-                          width: 37,
-                          height: 37,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.grey,
-                            ),
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Container(
-                          width: 37,
-                          height: 37,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.grey,
-                            ),
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Container(
-                          width: 37,
-                          height: 37,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.grey,
-                            ),
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Container(
-                          width: 37,
-                          height: 37,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.grey,
-                            ),
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Container(
-                          width: 37,
-                          height: 37,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.grey,
-                            ),
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                        ),
+                        buildNumberButton('4'),
+                        buildNumberButton('5'),
+                        buildNumberButton('6'),
                       ],
                     ),
                     const SizedBox(
@@ -157,136 +210,9 @@ class UserPasswordState extends State<UserPassword> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Container(
-                          width: 50,
-                          height: 50,
-                          margin: const EdgeInsets.only(left: 13),
-                          child: const Center(
-                            child: Text(
-                              '1',
-                              style: TextStyle(fontSize: 20),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        const SizedBox(
-                          width: 50,
-                          height: 50,
-                          child: Center(
-                            child: Text(
-                              '2',
-                              style: TextStyle(fontSize: 20),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Container(
-                          width: 50,
-                          height: 50,
-                          margin: const EdgeInsets.only(right: 13),
-                          child: const Center(
-                            child: Text(
-                              '3',
-                              style: TextStyle(fontSize: 20),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 17,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Container(
-                          width: 50,
-                          height: 50,
-                          margin: const EdgeInsets.only(left: 13),
-                          child: const Center(
-                            child: Text(
-                              '4',
-                              style: TextStyle(fontSize: 20),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        const SizedBox(
-                          width: 50,
-                          height: 50,
-                          child: Center(
-                            child: Text(
-                              '5',
-                              style: TextStyle(fontSize: 20),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Container(
-                          width: 50,
-                          height: 50,
-                          margin: const EdgeInsets.only(right: 13),
-                          child: const Center(
-                            child: Text(
-                              '6',
-                              style: TextStyle(fontSize: 20),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 17,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Container(
-                          width: 50,
-                          height: 50,
-                          margin: const EdgeInsets.only(left: 13),
-                          child: const Center(
-                            child: Text(
-                              '7',
-                              style: TextStyle(fontSize: 20),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        const SizedBox(
-                          width: 50,
-                          height: 50,
-                          child: Center(
-                            child: Text(
-                              '8',
-                              style: TextStyle(fontSize: 20),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Container(
-                          width: 50,
-                          height: 50,
-                          margin: const EdgeInsets.only(right: 13),
-                          child: const Center(
-                            child: Text(
-                              '9',
-                              style: TextStyle(fontSize: 20),
-                            ),
-                          ),
-                        ),
+                        buildNumberButton('7'),
+                        buildNumberButton('8'),
+                        buildNumberButton('9'),
                       ],
                     ),
                     const SizedBox(
@@ -303,28 +229,18 @@ class UserPasswordState extends State<UserPassword> {
                         const SizedBox(
                           width: 10,
                         ),
-                        Container(
-                          width: 50,
-                          height: 50,
-                          margin: const EdgeInsets.only(left: 13),
-                          child: Center(
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) => const MainPage(),
-                                  ),
-                                );
-                              },
-                              child: const SizedBox(
-                                width: 50,
-                                height: 50,
-                                child: Center(
-                                  child: Text(
-                                    '0',
-                                    style: TextStyle(fontSize: 20),
-                                  ),
-                                ),
+                        GestureDetector(
+                          onTap: () {
+                            addNumber('0');
+                          },
+                          child: Container(
+                            width: 50,
+                            height: 50,
+                            margin: const EdgeInsets.only(left: 13),
+                            child: const Center(
+                              child: Text(
+                                '0',
+                                style: TextStyle(fontSize: 20),
                               ),
                             ),
                           ),
@@ -332,15 +248,21 @@ class UserPasswordState extends State<UserPassword> {
                         const SizedBox(
                           width: 10,
                         ),
-                        Container(
-                          width: 50,
-                          height: 50,
-                          margin: const EdgeInsets.only(right: 13),
-                          child: const Center(
+                        GestureDetector(
+                          onTap: () {
+                            removeNumber();
+                          },
+                          child: Container(
+                            width: 50,
+                            height: 50,
+                            margin: const EdgeInsets.only(right: 13),
+                            child: const Center(
                               child: Icon(
-                            Icons.backspace,
-                            size: 30,
-                          )),
+                                Icons.backspace,
+                                size: 30,
+                              ),
+                            ),
+                          ),
                         ),
                       ],
                     ),
